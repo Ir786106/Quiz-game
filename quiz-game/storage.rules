@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userPath() {
+      return /databases/(default)/documents/users/$(request.auth.uid);
+    }
+
+    function role() {
+      return signedIn() && firestore.exists(userPath())
+        ? firestore.get(userPath()).data.role
+        : "student";
+    }
+
+    function isTeacher() {
+      return signedIn() && (role() == "teacher" || role() == "admin");
+    }
+
+    match /lessons/{uid}/{fileName} {
+      allow read: if true;
+      allow write: if isTeacher() && request.auth.uid == uid
+        && request.resource.size < 25 * 1024 * 1024;
+    }
+  }
+}

@@ -1,0 +1,130 @@
+mutation CreateDemoData @transaction @auth(level: USER, insecureReason: "Seed data mutation, safe for any logged in user to run once.") {
+  user_insertMany(data: [
+    {
+      id: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      displayName: "John Doe",
+      email: "john.doe@example.com",
+      createdAt: "2023-01-01T10:00:00Z"
+    },
+    {
+      id: "f0e9d8c7-b6a5-4321-fedc-ba9876543210",
+      displayName: "Jane Smith",
+      email: "jane.smith@example.com",
+      createdAt: "2023-01-02T11:00:00Z"
+    }
+  ])
+  course_insertMany(data: [
+    {
+      id: "1a2b3c4d-5e6f-7890-1234-567890abcde1",
+      title: "Introduction to GraphQL",
+      description: "Learn the basics of GraphQL for modern API development.",
+      difficultyLevel: "Beginner",
+      createdAt: "2023-01-05T09:00:00Z",
+      createdById: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      imageUrl: "https://example.com/graphql_intro.jpg"
+    },
+    {
+      id: "2b3c4d5e-6f7a-8901-2345-67890abcdef2",
+      title: "Advanced Firebase Development",
+      description: "Deep dive into Firebase services for scalable applications.",
+      difficultyLevel: "Intermediate",
+      createdAt: "2023-01-10T14:30:00Z",
+      createdById: "f0e9d8c7-b6a5-4321-fedc-ba9876543210",
+      imageUrl: "https://example.com/firebase_advanced.jpg"
+    }
+  ])
+  lesson_insertMany(data: [
+    {
+      id: "3c4d5e6f-7a8b-9012-3456-7890abcdef3",
+      courseId: "1a2b3c4d-5e6f-7890-1234-567890abcde1",
+      title: "What is GraphQL?",
+      content: "An overview of GraphQL's core concepts and benefits.",
+      orderInCourse: 1,
+      createdAt: "2023-01-06T10:00:00Z",
+      videoUrl: "https://example.com/graphql_lesson1.mp4"
+    },
+    {
+      id: "4d5e6f7a-8b9c-0123-4567-890abcdef4",
+      courseId: "1a2b3c4d-5e6f-7890-1234-567890abcde1",
+      title: "GraphQL Schema and Types",
+      content: "Defining your API with GraphQL schema definition language.",
+      orderInCourse: 2,
+      createdAt: "2023-01-07T11:00:00Z",
+      videoUrl: "https://example.com/graphql_lesson2.mp4"
+    },
+    {
+      id: "5e6f7a8b-9c0d-1234-5678-90abcdef5",
+      courseId: "2b3c4d5e-6f7a-8901-2345-67890abcdef2",
+      title: "Cloud Functions with Firebase",
+      content: "Implementing serverless logic with Cloud Functions for Firebase.",
+      orderInCourse: 1,
+      createdAt: "2023-01-11T10:00:00Z",
+      videoUrl: "https://example.com/firebase_lesson1.mp4"
+    }
+  ])
+  quiz_insertMany(data: [
+    {
+      id: "6f7a8b9c-0d1e-2345-6789-0abcdef678",
+      courseId: "1a2b3c4d-5e6f-7890-1234-567890abcde1",
+      title: "GraphQL Basics Quiz",
+      createdAt: "2023-01-08T15:00:00Z",
+      passingScore: 70,
+      description: "Test your understanding of fundamental GraphQL concepts."
+    },
+    {
+      id: "7a8b9c0d-1e2f-3456-7890-abcdef7890",
+      lessonId: "5e6f7a8b-9c0d-1234-5678-90abcdef5",
+      title: "Firebase Functions Quiz",
+      createdAt: "2023-01-12T16:00:00Z",
+      passingScore: 80,
+      description: "Assess your knowledge of Cloud Functions for Firebase."
+    }
+  ])
+  question_insertMany(data: [
+    {
+      id: "8b9c0d1e-2f3a-4567-8901-abcdef8901",
+      quizId: "6f7a8b9c-0d1e-2345-6789-0abcdef678",
+      text: "What does GraphQL stand for?",
+      type: "Multiple Choice",
+      options: ["Graph Query Language", "Graph Qubic Logic", "General Query Language"],
+      correctAnswer: "Graph Query Language",
+      explanation: "GraphQL is a query language for your API."
+    },
+    {
+      id: "9c0d1e2f-3a4b-5678-9012-abcdef9012",
+      quizId: "6f7a8b9c-0d1e-2345-6789-0abcdef678",
+      text: "Which of the following is NOT a core GraphQL operation type?",
+      type: "Multiple Choice",
+      options: ["Query", "Mutation", "Subscription", "Fragment"],
+      correctAnswer: "Fragment",
+      explanation: "Fragment is a reusable unit, not an operation type."
+    }
+  ])
+  enrollment_insertMany(data: [
+    {
+      userId: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      courseId: "1a2b3c4d-5e6f-7890-1234-567890abcde1",
+      enrolledAt: "2023-01-05T10:00:00Z",
+      progress: "In Progress",
+      lastAccessedAt: "2023-01-07T12:00:00Z"
+    },
+    {
+      userId: "f0e9d8c7-b6a5-4321-fedc-ba9876543210",
+      courseId: "1a2b3c4d-5e6f-7890-1234-567890abcde1",
+      enrolledAt: "2023-01-06T09:00:00Z",
+      progress: "Completed",
+      lastAccessedAt: "2023-01-08T16:00:00Z"
+    }
+  ])
+  quizAttempt_insertMany(data: [
+    {
+      id: "a0b1c2d3-e4f5-6789-0123-456789abcdef",
+      userId: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      quizId: "6f7a8b9c-0d1e-2345-6789-0abcdef678",
+      score: 85,
+      attemptedAt: "2023-01-09T10:00:00Z",
+      passed: true,
+      answers: "{\"1\": \"Graph Query Language\", \"2\": \"Fragment\"}"
+    }
+  ])
+}

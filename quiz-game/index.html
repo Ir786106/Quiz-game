@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduQuest Learning Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand-button" id="brand-home-btn" type="button" aria-label="Go to home">
+        <span class="brand-mark">EQ</span>
+        <span>
+          <strong>EduQuest</strong>
+          <small>Firebase learning platform</small>
+        </span>
+      </button>
+
+      <div class="player-strip" aria-label="Player progress summary">
+        <span><strong id="header-xp">0</strong> XP</span>
+        <span><strong id="header-completed">0</strong> Games</span>
+        <span><strong id="header-badges">0</strong> Badges</span>
+        <span id="auth-status-pill">Guest</span>
+      </div>
+
+      <nav class="quick-nav" aria-label="Main navigation">
+        <button class="theme-toggle" id="theme-toggle-btn" type="button" aria-label="Switch color theme">Dark</button>
+        <button class="nav-btn" id="dashboard-nav-btn" type="button" data-nav-screen="dashboard-screen">Dashboard</button>
+        <button class="nav-btn" type="button" data-nav-screen="leaderboard-screen">Leaderboard</button>
+        <button class="nav-btn" type="button" data-nav-screen="progress-screen">Progress</button>
+        <button class="nav-btn" type="button" data-nav-screen="scores-screen">Scores</button>
+        <button class="nav-btn" type="button" data-nav-screen="settings-screen">Settings</button>
+        <button class="nav-btn" id="logout-btn" type="button" hidden>Logout</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="screen active" id="home-screen" aria-labelledby="home-title">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Learn by playing</p>
+            <h1 id="home-title">A complete learning platform for skills that stick.</h1>
+            <p class="hero-text">Practice computer science, math, English, programming, web development, general knowledge, and cybersecurity through Firebase-synced lessons, quizzes, badges, certificates, leaderboards, and level quests.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" id="start-learning-btn" type="button">Start Learning</button>
+              <button class="secondary-btn" type="button" data-nav-screen="progress-screen">View Progress</button>
+            </div>
+          </div>
+          <div class="hero-panel" aria-label="Learning stats">
+            <div>
+              <span class="panel-number" id="home-subject-count">7</span>
+              <span class="panel-label">Subjects</span>
+            </div>
+            <div>
+              <span class="panel-number" id="home-mode-count">8</span>
+              <span class="panel-label">Game Modes</span>
+            </div>
+            <div>
+              <span class="panel-number">3</span>
+              <span class="panel-label">Levels</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Inspired by playful learning</p>
+            <h2>Digital and classroom-style games in one offline app</h2>
+          </div>
+        </div>
+        <div class="inspiration-grid" id="inspiration-grid">
+          <article class="inspiration-card">
+            <strong>Adventure quests</strong>
+            <span>Minecraft Education-style exploration energy with level-based subject paths.</span>
+          </article>
+          <article class="inspiration-card">
+            <strong>Math duels</strong>
+            <span>Prodigy-style quick practice through timed challenge and level unlocks.</span>
+          </article>
+          <article class="inspiration-card">
+            <strong>Kid-friendly practice</strong>
+            <span>Khan Academy Kids-style simple feedback, gentle progress, and flashcard recall.</span>
+          </article>
+          <article class="inspiration-card">
+            <strong>Daily streaks</strong>
+            <span>Duolingo-style XP, badges, streaks, and short repeatable sessions.</span>
+          </article>
+          <article class="inspiration-card">
+            <strong>Word table games</strong>
+            <span>Scrabble and Boggle-inspired spelling, vocabulary, and word hunt play.</span>
+          </article>
+          <article class="inspiration-card">
+            <strong>Classroom prompts</strong>
+            <span>Zingo, Charades, and Pictionary-inspired boards, acting prompts, and drawing rounds.</span>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Pick up where you left off</p>
+            <h2>Recent activity</h2>
+          </div>
+        </div>
+        <div class="platform-grid">
+          <section class="platform-card" id="auth-panel" aria-live="polite"></section>
+          <section class="platform-card" id="firebase-status-panel"></section>
+        </div>
+        <div class="history-list compact" id="home-recent-list"></div>
+      </section>
+
+      <section class="screen" id="dashboard-screen" aria-labelledby="dashboard-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" id="dashboard-role-label">Firebase Platform</p>
+            <h1 id="dashboard-title">Role Dashboard</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Home</button>
+        </div>
+        <div id="dashboard-content"></div>
+      </section>
+
+      <section class="screen" id="leaderboard-screen" aria-labelledby="leaderboard-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Realtime rankings</p>
+            <h1 id="leaderboard-title">Leaderboard</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Home</button>
+        </div>
+        <div class="leaderboard-tabs">
+          <button class="secondary-btn" type="button" data-board-range="overall">Overall</button>
+          <button class="ghost-btn" type="button" data-board-range="weekly">Weekly</button>
+          <button class="ghost-btn" type="button" data-board-range="monthly">Monthly</button>
+        </div>
+        <div class="high-score-list" id="leaderboard-list"></div>
+      </section>
+
+      <section class="screen" id="subject-screen" aria-labelledby="subject-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Step 1</p>
+            <h1 id="subject-title">Choose a subject</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Home</button>
+        </div>
+        <div class="card-grid subject-grid" id="subject-grid"></div>
+      </section>
+
+      <section class="screen" id="mode-screen" aria-labelledby="mode-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" id="mode-subject-label">Step 2</p>
+            <h1 id="mode-title">Choose a game mode</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="subject-screen">Back</button>
+        </div>
+        <div class="card-grid mode-grid" id="mode-grid"></div>
+      </section>
+
+      <section class="screen" id="difficulty-screen" aria-labelledby="difficulty-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" id="difficulty-path-label">Step 3</p>
+            <h1 id="difficulty-title">Choose a difficulty</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="mode-screen">Back</button>
+        </div>
+        <div class="card-grid difficulty-grid" id="difficulty-grid"></div>
+        <p class="inline-note" id="unlock-note"></p>
+      </section>
+
+      <section class="screen" id="game-screen" aria-labelledby="game-title">
+        <div class="game-topline">
+          <button class="ghost-btn" id="game-back-btn" type="button">Back</button>
+          <div class="game-meta">
+            <p class="eyebrow" id="game-path">Game</p>
+            <h1 id="game-title">Question</h1>
+          </div>
+          <div class="timer-pill" id="timer-pill" hidden>
+            <span>Time</span>
+            <strong id="timer-value">0</strong>
+          </div>
+        </div>
+
+        <div class="status-row">
+          <div class="stat-tile">
+            <span>Score</span>
+            <strong id="live-score">0</strong>
+          </div>
+          <div class="stat-tile">
+            <span>Correct</span>
+            <strong id="live-correct">0</strong>
+          </div>
+          <div class="stat-tile">
+            <span>Progress</span>
+            <strong id="live-progress-text">0/0</strong>
+          </div>
+        </div>
+
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" id="game-progress-bar"></div>
+        </div>
+
+        <div class="game-card" id="game-area"></div>
+
+        <div class="feedback-box" id="feedback-box" aria-live="polite"></div>
+
+        <div class="game-controls">
+          <button class="secondary-btn" id="hint-btn" type="button">Hint</button>
+          <button class="primary-btn" id="next-btn" type="button" disabled>Next</button>
+        </div>
+      </section>
+
+      <section class="screen" id="result-screen" aria-labelledby="result-title">
+        <div class="section-heading centered">
+          <div>
+            <p class="eyebrow">Results</p>
+            <h1 id="result-title">Session complete</h1>
+          </div>
+        </div>
+        <div class="result-grid" id="result-summary"></div>
+        <div class="badge-awards" id="new-badges"></div>
+        <div class="hero-actions centered-actions">
+          <button class="primary-btn" id="result-progress-btn" type="button">Progress Dashboard</button>
+          <button class="secondary-btn" id="restart-game-btn" type="button">Restart Game</button>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Back to Home</button>
+        </div>
+      </section>
+
+      <section class="screen" id="progress-screen" aria-labelledby="progress-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Your journey</p>
+            <h1 id="progress-title">Progress Dashboard</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Home</button>
+        </div>
+        <div class="dashboard-grid" id="progress-stats"></div>
+
+        <div class="split-layout">
+          <section class="panel-block" aria-labelledby="badges-title">
+            <div class="panel-heading">
+              <h2 id="badges-title">Badges</h2>
+            </div>
+            <div class="badge-grid" id="badge-grid"></div>
+          </section>
+
+          <section class="panel-block" aria-labelledby="history-title">
+            <div class="panel-heading">
+              <h2 id="history-title">History</h2>
+            </div>
+            <div class="history-list" id="history-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="screen" id="scores-screen" aria-labelledby="scores-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Best runs</p>
+            <h1 id="scores-title">High Scores</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Home</button>
+        </div>
+        <div class="high-score-list" id="high-score-list"></div>
+      </section>
+
+      <section class="screen" id="settings-screen" aria-labelledby="settings-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Local app controls</p>
+            <h1 id="settings-title">Settings</h1>
+          </div>
+          <button class="ghost-btn" type="button" data-nav-screen="home-screen">Home</button>
+        </div>
+
+        <div class="settings-panel">
+          <label class="setting-row" for="question-limit">
+            <span>
+              <strong>Questions per session</strong>
+              <small>Uses all available questions when fewer exist.</small>
+            </span>
+            <select id="question-limit">
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="8">8</option>
+            </select>
+          </label>
+
+          <label class="setting-row" for="timer-seconds">
+            <span>
+              <strong>Timed challenge seconds</strong>
+              <small>Applies to each timed question.</small>
+            </span>
+            <select id="timer-seconds">
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </label>
+
+          <label class="setting-row toggle-row" for="animations-toggle">
+            <span>
+              <strong>Smooth transitions</strong>
+              <small>Turn off if you prefer reduced motion.</small>
+            </span>
+            <input id="animations-toggle" type="checkbox">
+          </label>
+
+          <label class="setting-row" for="theme-choice">
+            <span>
+              <strong>Color theme</strong>
+              <small>Choose light, dark, or your device setting.</small>
+            </span>
+            <select id="theme-choice">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="system">System</option>
+            </select>
+          </label>
+
+          <div class="setting-row">
+            <span>
+              <strong>Firebase project</strong>
+              <small>Update firebase-config.js with your Firebase web app config before deployment.</small>
+            </span>
+            <button class="secondary-btn" id="seed-content-btn" type="button">Seed Starter Content</button>
+          </div>
+
+          <div class="danger-zone">
+            <div>
+              <strong>Clear local progress</strong>
+              <small>Removes XP, scores, badges, unlocked levels, and history from this browser.</small>
+            </div>
+            <button class="danger-btn" id="clear-progress-btn" type="button">Clear Progress</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="questions.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>

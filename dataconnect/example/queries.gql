@@ -1,0 +1,50 @@
+query ListAllCourses @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public as it only retrieves course titles and descriptions.") {
+  courses {
+    id
+    title
+    description
+    difficultyLevel
+    imageUrl
+    createdBy {
+      displayName
+      email
+    }
+  }
+}
+
+query GetMyEnrollments @auth(level: USER, insecureReason: "This operation is safe to expose to all logged in users as it retrieves only their own enrollments.") {
+  enrollments(where: {userId: {eq_expr: "auth.uid"}}) {
+    course {
+      title
+      description
+    }
+    enrolledAt
+    progress
+    lastAccessedAt
+  }
+}
+
+mutation CreateNewCourse($title: String!, $description: String!, $difficultyLevel: String!, $imageUrl: String) @auth(level: USER, insecureReason: "This operation allows logged-in users to create a new course.") {
+  course_insert(data: {
+    title: $title,
+    description: $description,
+    difficultyLevel: $difficultyLevel,
+    imageUrl: $imageUrl,
+    createdById_expr: "auth.uid"
+  }) {
+    id
+  }
+}
+
+mutation RecordQuizAttempt($quizId: UUID!, $score: Int!, $passed: Boolean!, $answers: String) @auth(level: USER, insecureReason: "This operation allows logged-in users to record their quiz attempts.") {
+  quizAttempt_insert(data: {
+    userId_expr: "auth.uid",
+    quizId: $quizId,
+    score: $score,
+    passed: $passed,
+    answers: $answers,
+    attemptedAt_expr: "request.time"
+  }) {
+    id
+  }
+}
