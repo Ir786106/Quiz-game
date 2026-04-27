@@ -1,0 +1,118 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Start screen -->
+    <!-- <div class="screen active" id="start-screen">
+      <h1>Quiz Time!</h1>
+      <p>Test your knowledge with these fun questions</p>
+      <button id="start-btn">Start Quiz</button>
+    </div>
+
+    <!-- Quiz screen -->
+    <!-- <div class="screen" id="quiz-screen">
+      <div class="quiz-header">
+        <h2 id="question-text">Question goes here</h2>
+
+        <div class="quiz-info">
+          <p> Question <samp id="current-question">1</samp> of  
+          <samp id="total-questions">5</samp></p>
+
+          <p>Score <samp id="score">0</samp></p>
+        </div>
+      </div> -->
+
+      <!-- Questions & Answers -->
+      <!-- <div class="answer-container" id="answer-container">
+        <!-- Answer buttons will be injected here -->
+      <!-- </div>
+
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+    </div> --> -->
+
+    <!-- Result screen -->
+    <!-- <div class="screen" id="result-screen">
+      <h1>Quiz Results</h1>
+      <div class="result-info">
+        <p>Your score <samp id="final-score">0</samp> out of <samp id="max-score">5</samp></p>
+        <div id="result-message">Good job!</div>
+      </div>
+      <button id="restart-btn">Restart Quiz</button>
+    </div> -->
+
+  <!-- </div>
+  <script src="script.js"></script>
+</body>
+</html> --> --> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Arcade</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Start screen -->
+    <div class="screen active" id="start-screen">
+      <h1>Learning Arcade</h1>
+      <p>Choose an educational game and difficulty level. Everything runs entirely in your browser.</p>
+
+      <div class="config-panel">
+        <label for="game-select">Game Type</label>
+        <select id="game-select"></select>
+
+        <label for="difficulty-select">Difficulty</label>
+        <select id="difficulty-select"></select>
+      </div>
+
+      <div class="mode-preview" id="mode-preview"></div>
+      <button id="start-btn">Start Learning</button>
+    </div>
+
+    <!-- Game screen -->
+    <div class="screen" id="quiz-screen">
+      <div class="quiz-header">
+        <p class="badge" id="session-badge"></p>
+        <h2 id="question-text">Question goes here</h2>
+
+        <div class="quiz-info">
+          <p>Item <span id="current-question">1</span> of <span id="total-questions">5</span></p>
+          <p>Score <span id="score">0</span></p>
+        </div>
+      </div>
+
+      <div class="answer-container" id="answer-container"></div>
+
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+    </div>
+
+    <!-- Result screen -->
+    <div class="screen" id="result-screen">
+      <h1>Session Results</h1>
+      <div class="result-info">
+        <p id="result-summary"></p>
+        <p>Your score: <span id="final-score">0</span> out of <span id="max-score">5</span></p>
+        <div id="result-message">Good job!</div>
+      </div>
+      <button id="restart-btn">Play Another Game</button>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
